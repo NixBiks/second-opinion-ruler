@@ -1,14 +1,11 @@
-import dataclasses
-import re
 import typing as t
 import warnings
 
 from spacy.errors import Errors
 from spacy.language import Language
-from spacy.pipeline.span_ruler import DEFAULT_SPANS_KEY, PatternType, SpanRuler
+from spacy.pipeline.span_ruler import DEFAULT_SPANS_KEY, SpanRuler
 from spacy.tokens import Doc, Span
 from spacy.util import registry
-from typing_extensions import Unpack
 
 DateFormat = str
 SinglePattern = str | list[dict[str, t.Any]]
@@ -37,18 +34,6 @@ class MatchLabelById(t.TypedDict):
     id: str
     label: str
     on_match: OnMatchArgs | None
-
-
-@dataclasses.dataclass
-class Rule:
-    patterns: list[SinglePattern]
-    extruct: str
-    label: str
-
-
-@dataclasses.dataclass
-class CompiledRule(Rule):
-    compiled_extruct: re.Pattern
 
 
 @Language.factory(
