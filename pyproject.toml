@@ -1,0 +1,86 @@
+[tool.poetry]
+name = "second-opinion-ruler"
+version = "0.1.0"
+description = "A spaCy custom component that extends the SpanRuler with a second opinion"
+authors = ["Nicolai Bjerre Pedersen"]
+maintainers = ["Nicolai Bjerre Pedersen"]
+readme = "README.md"
+packages = [{include = "*", from = "src"}]
+homepage = "https://github.com/mr-bjerre/second-opinion-ruler"
+repository = "https://github.com/mr-bjerre/second-opinion-ruler"
+documentation = "https://github.com/mr-bjerre/second-opinion-ruler#readme"
+license = "MIT"
+keywords = ["python", "spaCy", "custom component"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Environment :: Console",
+    "Environment :: MacOS X",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+spacy = [
+    { extras = ["apple"], version = "^3.4.1", markers = "sys_platform == 'darwin'" },
+    { version = "^3.4.1", markers = "sys_platform != 'darwin'" }
+]
+
+
+[tool.poetry.group.test.dependencies]
+pytest-cov = "^4.0.0"
+pyright = "^1.1.273"
+
+
+[tool.poetry.group.develop.dependencies]
+black = "^22.8.0"
+isort = "^5.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+exclude = [
+    "**/.venv",
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-r a -s"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage]
+    [tool.coverage.run]
+
+    source = ["src"]
+    branch = true
+
+    [tool.coverage.report]
+    exclude_lines = [
+        "# noqa",
+        "raise NotImplementedError"
+    ]
+    fail_under = 75
+    show_missing = true
+
+[tool.poetry.plugins."spacy_factories"]
+make_second_opinion_ruler = "second_opinion_ruler:make_second_opinion_ruler"
